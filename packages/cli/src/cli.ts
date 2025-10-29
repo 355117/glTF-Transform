@@ -306,6 +306,10 @@ commands or using the scripting API.
 			default: true,
 		},
 	)
+	.option('--prune-leaves <bool>', 'Whether to prune empty leaf nodes.', {
+		validator: Validator.BOOLEAN,
+		default: true,
+	})
 	.option(
 		'--compress <method>',
 		'Floating point compression method. Draco compresses geometry; Meshopt ' +
@@ -366,6 +370,7 @@ commands or using the scripting API.
 			prune: boolean;
 			pruneAttributes: boolean;
 			pruneSolidTextures: boolean;
+			pruneLeaves: boolean;
 			compress: 'draco' | 'meshopt' | 'quantize' | false;
 			textureCompress: 'ktx2' | 'webp' | 'webp' | 'auto' | false;
 			textureSize: number;
@@ -420,7 +425,7 @@ commands or using the scripting API.
 				prune({
 					keepAttributes: !opts.pruneAttributes,
 					keepIndices: false,
-					keepLeaves: false,
+					keepLeaves: !opts.pruneLeaves,
 					keepSolidTextures: !opts.pruneSolidTextures,
 				}),
 			);
